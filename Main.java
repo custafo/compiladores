@@ -5,7 +5,7 @@ public class Main {
     }
 
     public static void removeBrancos(String txt) {
-        txt = txt.replaceAll("\\s", ""); //retira os espaços em branco
+        txt = txt.replaceAll("\\s", ""); // retira os espaços em branco
         System.out.println(txt);
         Token(txt);
     }
@@ -14,8 +14,7 @@ public class Main {
         int state = 0, i = 0;
         boolean finalState = false;
 
-
-        if (Character.isLetter(txt.charAt(0)) || txt.charAt(0) == '_') { //Reconhece ID
+        if (Character.isLetter(txt.charAt(0)) || txt.charAt(0) == '_') { // Reconhece ID
             do {
                 if (state == 0) {
                     i++;
@@ -37,11 +36,11 @@ public class Main {
         }
 
         if (i < txt.length()) {
-            if (Character.isDigit(txt.charAt(i))) { //Reconhece números inteiros
+            if (Character.isDigit(txt.charAt(i))) { // Reconhece números inteiros
                 state = 1;
                 i++;
                 do {
-                    if(state == 1) {
+                    if (state == 1) {
                         if (Character.isDigit(txt.charAt(i))) {
                             i++;
                             state = 1;
@@ -49,9 +48,9 @@ public class Main {
                         } else {
                             state = 2;
                         }
-                    }else if (state == 2){
-                            finalState = false;
-                            break;
+                    } else if (state == 2) {
+                        finalState = false;
+                        break;
                     }
                 } while (i < txt.length());
             }
@@ -60,7 +59,7 @@ public class Main {
         if (i < txt.length()) {
             i--;
             state = 0;
-            if (Character.isDigit(txt.charAt(i))) { //Reconhece números decimais
+            if (Character.isDigit(txt.charAt(i))) { // Reconhece números decimais
                 do {
                     switch (state) {
                         case (0):
@@ -99,6 +98,35 @@ public class Main {
             }
         }
 
+        if (txt.charAt(0) == '"') { // Reconhece constantes de texto (strings)
+            do {
+                if (state == 0) {
+                    i++;
+                    state = 1;
+                } else if (state == 1) {
+                    if (txt.charAt(i) == '\\') { // Verifica se há um caractere de escape
+                        i++;
+                        state = 2;
+                    } else if (txt.charAt(i) == '"') { // Verifica se é o fim da string
+                        i++;
+                        state = 3;
+                        finalState = true;
+                    } else {
+                        i++;
+                    }
+                } else if (state == 2) {
+                    // Lida com escapes específicos, como \n, \t, \", etc.
+                    if (isEscapeCharacter(txt.charAt(i))) {
+                        i++;
+                        state = 1;
+                    } else {
+                        System.out.println("ERRO: Sequência de escape inválida!");
+                        break;
+                    }
+                }
+            } while (i < txt.length());
+        }
+
         if (finalState == true) {
             System.out.println("A sequência foi aceita!");
         } else {
@@ -106,4 +134,20 @@ public class Main {
         }
     }
 
+    public static boolean isEscapeCharacter(char c) {
+        switch (c) {
+            case 'n': // Quebra de linha
+            case 't': // Tabulação
+            case 'r': // Retorno de carro
+            case 'b': // Retrocesso (backspace)
+            case 'f': // Avanço de página
+            case '\\': // Barra invertida
+            case '\'': // Aspa simples
+            case '\"': // Aspa dupla
+                return true;
+            default:
+                return false;
+        }
+    }
 }
+
