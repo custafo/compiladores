@@ -22,22 +22,24 @@ public class LexicalAnalyzer {
 
             String textoDoArquivo = conteudo.toString();
             textoDoArquivo = textoDoArquivo.replaceAll("\\s", ""); //apaga espaços em branco
-//            Tokenizer.analyzer(textoDoArquivo); classe infuncional
-            TesteAceitacao.analisadorLexico(textoDoArquivo);
+            Tokenizer.analyzer(textoDoArquivo);
+//            TesteAceitacao.analisadorLexico(textoDoArquivo);
             tokenList(textoDoArquivo);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static List<Token> tokenList(String input) {
+    public static List<Token> tokenList(String txt) {
         List<Token> tokens = new ArrayList<>();
+
         Pattern pattern = Pattern.compile(
                 "\\s*" +  // Ignora espaços em branco
-                        "(\\d+\\.\\d+|\\d+|\"[^\"]*\"|//.*|&&|\\|\\||!=|==|>=|<=|[<>+\\-*/%&|!(){}[//],;=])" +
+                        "([a-zA-Z_][a-zA-Z_0-9]*|\\d+\\.\\d+|\\d+|\"[^\"]*\"|//.*|&&|\\|\\||!=|==|>=|<=|[<>+\\-*/%&|!(){}[//],;=])" +
                         "\\s*"
         );
-        Matcher matcher = pattern.matcher(input);
+
+        Matcher matcher = pattern.matcher(txt);
 
         while (matcher.find()) {
             String tokenValue = matcher.group(1);
@@ -53,6 +55,9 @@ public class LexicalAnalyzer {
 
     private static TokenType getTokenType(String tokenValue) {
         if (tokenValue.matches("[a-zA-Z_][a-zA-Z0-9_]*")) {
+            if(tokenValue.matches("int|float|char|boolean|void|if|else|for|while|scanf|println|main|return")){
+                return TokenType.RESERVADA;
+            }
             return TokenType.ID;
         } else if (tokenValue.matches("\\d+")) {
             return TokenType.NUM_INT;
@@ -65,10 +70,10 @@ public class LexicalAnalyzer {
         } else if (tokenValue.matches("//.*")) {
             return TokenType.COMENTARIO;
         } else {
-                return TokenType.OPERADOR_SIMBOLO;
-            }
+            return TokenType.OPERADOR_SIMBOLO;
         }
     }
+}
 
 
 
