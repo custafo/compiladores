@@ -1,9 +1,0 @@
-enum TokenType {
-    NUM_INT,
-    NUM_DEC,
-    ID, TEXTO,
-    RESERVADA,
-    COMENTARIO,
-    OPERADOR_SIMBOLO,
-    OPERADOR_INADEQUADO
-}
