@@ -1,6 +1,0 @@
-int = 4.83; 
-
-main() {
- println("consegui!");
- dupla = "DudaEGustavo";
-}
