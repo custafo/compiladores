@@ -49,7 +49,7 @@ public class GeradorTokens {
             return TipoToken.PALAVRA_RESERVADA;
         } else if (tokenValue.matches("//.*")) {
             return TipoToken.COMENTARIO;
-        } else if (tokenValue.matches("[!(){},;[/]]")){
+        } else if (tokenValue.matches("[(){},;[/]]")){
             return TipoToken.SIMBOLO_ESPECIAL;
         }else {
             return TipoToken.OPERADOR;
