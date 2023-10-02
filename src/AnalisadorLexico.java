@@ -128,11 +128,6 @@ public class AnalisadorLexico {
                 continue;
             }
 
-//            if (caracter == '\'') {
-//                cont++;
-//                continue;
-//            }
-
             String WHITESPACE = "\\s";
             if (WHITESPACE.matches(caracter + "")) {
                 cont++;
