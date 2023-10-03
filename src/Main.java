@@ -2,6 +2,8 @@ package src;
 
 import java.io.*;
 
+//DUPLA: Gustavo Pereira Oliveira Lima e Maria Eduarda Santana da Silva Barros
+
 public class Main {
     public static void main(String[] args) throws FileNotFoundException {
         String caminhoArquivo = "C:/Users/medua/IdeaProjects/analisadorLexico_compiladores/out/arqTx.txt"; // Caminho para o arquivo de texto
